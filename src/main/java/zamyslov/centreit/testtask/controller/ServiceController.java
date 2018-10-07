@@ -10,7 +10,7 @@ import zamyslov.centreit.testtask.service.UserService;
 import zamyslov.centreit.testtask.service.WeatherService;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/weather-api")
 public class ServiceController {
 
     private final WeatherService weatherService;
@@ -26,11 +26,6 @@ public class ServiceController {
         this.indicatorService = indicatorService;
     }
 
-    @GetMapping("/")
-    public String getHelloWorld() {
-        return "Hello, World!";
-    }
-
     @PostMapping("/get")
     public ResponseForWeatherEntryRead getWeatherData(@RequestBody RequestForRead request) {
         ResponseForWeatherEntryRead response = new ResponseForWeatherEntryRead();
@@ -40,7 +35,7 @@ public class ServiceController {
             Iterable<WeatherEntry> weatherEntries = weatherService.getWeatherByCityAndDate(city, request.getDate());
             response.setCityName(city.getName());
             response.setDate(request.getDate());
-            response.setWeatherConditionList(weatherEntries);
+            response.setWeatherConditionListFromEntries(weatherEntries);
             response.setResultState(BasicResponse.ResultState.HANDLED);
         } catch (RecordNotFoundException | PasswordMismatchException | AccessRightsException e) {
             response.setResultState(BasicResponse.ResultState.ERROR);

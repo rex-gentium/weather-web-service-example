@@ -9,6 +9,8 @@ public class WeatherCondition implements Serializable {
     private Long value;
     private String measurementUnitName;
 
+    public WeatherCondition() {}
+
     public WeatherCondition(String name, Long value, String measurementUnitName) {
         this.name = name;
         this.value = value;

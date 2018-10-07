@@ -1,5 +1,6 @@
 package zamyslov.centreit.testtask.json;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import zamyslov.centreit.testtask.entity.WeatherEntry;
 
 import java.time.LocalDate;
@@ -8,6 +9,7 @@ import java.util.List;
 
 public class ResponseForWeatherEntryRead extends BasicResponse {
     private String cityName;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
     private LocalDate date;
     private List<WeatherCondition> weatherConditionList;
 
@@ -35,7 +37,7 @@ public class ResponseForWeatherEntryRead extends BasicResponse {
         this.weatherConditionList = weatherConditionList;
     }
 
-    public void setWeatherConditionList(Iterable<WeatherEntry> weatherEntries) {
+    public void setWeatherConditionListFromEntries(Iterable<WeatherEntry> weatherEntries) {
         this.weatherConditionList = new LinkedList<>();
         for (WeatherEntry weatherEntry : weatherEntries)
             weatherConditionList.add(new WeatherCondition(weatherEntry));

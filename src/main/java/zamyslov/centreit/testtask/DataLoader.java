@@ -1,8 +1,10 @@
-package zamyslov.centreit.testtask.service;
+package zamyslov.centreit.testtask;
 
+import org.springframework.boot.ApplicationArguments;
+import org.springframework.boot.ApplicationRunner;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 import zamyslov.centreit.testtask.entity.*;
 import zamyslov.centreit.testtask.repository.*;
 
@@ -10,8 +12,9 @@ import java.time.LocalDate;
 import java.time.Month;
 import java.util.Random;
 
-@Service
-public class DatabaseInitializer {
+@Component
+public class DataLoader implements ApplicationRunner {
+
     private RoleRepository roleRepository;
     private UserRepository userRepository;
     private PasswordEncoder passwordEncoder;
@@ -24,7 +27,9 @@ public class DatabaseInitializer {
     private City moscow, ekaterinburg;
     private WeatherIndicator[] indicators;
 
-    public DatabaseInitializer(RoleRepository roleRepository, UserRepository userRepository,
+    public static Long moscowId, ekaterinburgId, humidityId;
+
+    public DataLoader(RoleRepository roleRepository, UserRepository userRepository,
                                CityRepository cityRepository, WeatherIndicatorRepository indicatorRepository,
                                WeatherEntryRepository weatherEntryRepository) {
         this.roleRepository = roleRepository;
@@ -35,7 +40,8 @@ public class DatabaseInitializer {
         this.passwordEncoder = new BCryptPasswordEncoder();
     }
 
-    public void populateDatabase() {
+    @Override
+    public void run(ApplicationArguments args) {
         clearTables();
         createRoles();
         createUsers();
@@ -83,6 +89,8 @@ public class DatabaseInitializer {
         ekaterinburg.setName("Екатеринбург");
         cityRepository.save(moscow);
         cityRepository.save(ekaterinburg);
+        moscowId = moscow.getId();
+        ekaterinburgId = ekaterinburg.getId();
     }
 
     private void createIndicators() {
@@ -111,24 +119,45 @@ public class DatabaseInitializer {
         indicatorRepository.save(indicators[1]);
         indicatorRepository.save(indicators[2]);
         indicatorRepository.save(indicators[3]);
+        humidityId = indicators[0].getId();
     }
 
     private void createWeatherEntries() {
+        // нам важны город, дата, индикатор и количество записей, остальное рандомно
+        WeatherEntry[] entries = new WeatherEntry[6];
+        entries[0] = new WeatherEntry();
+        entries[0].setCity(moscow);
+        entries[0].setDate(LocalDate.of(2018, Month.JANUARY, 2));
+        entries[0].setIndicator(indicators[0]);
+        entries[1] = new WeatherEntry();
+        entries[1].setCity(moscow);
+        entries[1].setDate(LocalDate.of(2018, Month.JANUARY, 3));
+        entries[1].setIndicator(indicators[1]);
+        entries[2] = new WeatherEntry();
+        entries[2].setCity(moscow);
+        entries[2].setDate(LocalDate.of(2018, Month.JANUARY, 3));
+        entries[2].setIndicator(indicators[2]);
+        entries[3] = new WeatherEntry();
+        entries[3].setCity(ekaterinburg);
+        entries[3].setDate(LocalDate.of(2018, Month.JANUARY, 1));
+        entries[3].setIndicator(indicators[3]);
+        entries[4] = new WeatherEntry();
+        entries[4].setCity(ekaterinburg);
+        entries[4].setDate(LocalDate.of(2018, Month.JANUARY, 1));
+        entries[4].setIndicator(indicators[0]);
+        entries[5] = new WeatherEntry();
+        entries[5].setCity(ekaterinburg);
+        entries[5].setDate(LocalDate.of(2018, Month.JANUARY, 2));
+        entries[5].setIndicator(indicators[1]);
         Random random = new Random();
-        for (int i = 0; i < 10; i++) {
-            WeatherEntry entry = new WeatherEntry();
+        for (WeatherEntry entry : entries) {
             entry.setUser(random.nextBoolean() ? graf : herzog);
-            entry.setCity(random.nextBoolean() ? moscow : ekaterinburg);
-            entry.setDate(LocalDate.of(2018, Month.JANUARY, random.nextBoolean() ? 1 : 2));
-            WeatherIndicator randomIndicator = indicators[random.nextInt(indicators.length)];
-            entry.setIndicator(randomIndicator);
             long randomValue = random.nextInt(100);
-            if (randomIndicator.hasMaxValue())
-                randomValue %= randomIndicator.getMaxValue() - (randomIndicator.hasMinValue() ? randomIndicator.getMinValue() : 0);
-            randomValue += (randomIndicator.hasMinValue() ? randomIndicator.getMinValue() : 0);
+            WeatherIndicator indicator = entry.getIndicator();
+            if (indicator.hasMaxValue())
+                randomValue %= indicator.getMaxValue() - (indicator.hasMinValue() ? indicator.getMinValue() : 0);
+            randomValue += (indicator.hasMinValue() ? indicator.getMinValue() : 0);
             entry.setIndicatorValue(randomValue);
-            if (weatherEntryRepository.findByCityAndDateAndIndicator(entry.getCity(), entry.getDate(), randomIndicator).isPresent())
-                continue;
             weatherEntryRepository.save(entry);
             System.out.println(entry);
         }
