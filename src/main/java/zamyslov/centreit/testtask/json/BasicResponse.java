@@ -2,6 +2,9 @@ package zamyslov.centreit.testtask.json;
 
 import java.io.Serializable;
 
+/***
+ * Содержит обязательные данные ответа веб-сервиса на правильно составленный запрос
+ */
 public class BasicResponse implements Serializable {
     public enum ResultState { UKNKOWN, ERROR, HANDLED }
     private ResultState resultState;

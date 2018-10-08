@@ -2,6 +2,9 @@ package zamyslov.centreit.testtask.json;
 
 import java.io.Serializable;
 
+/***
+ * Содержит обязательные данные запроса пользователя к веб-сервису
+ */
 public class BasicRequest implements Serializable {
     private String username;
     private String password;

@@ -1,13 +1,21 @@
 package zamyslov.centreit.testtask.entity;
 
+import zamyslov.centreit.testtask.entity.validation.MinMaxConstraint;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.validation.constraints.DecimalMax;
+import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
 
+/***
+ * Описание сущности Погодный показатель
+ */
 @Entity
+@MinMaxConstraint
 public class WeatherIndicator implements Serializable {
     @Id
     @GeneratedValue
@@ -15,7 +23,8 @@ public class WeatherIndicator implements Serializable {
     @NotEmpty
     @Column(unique = true)
     private String name;
-    private Long minValue, maxValue;
+    private Long minValue;
+    private Long maxValue;
     private String measurementUnitName;
 
     public Long getId() {

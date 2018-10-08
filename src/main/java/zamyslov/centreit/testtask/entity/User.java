@@ -4,6 +4,9 @@ import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
 
+/***
+ * Описание сущности Пользователь
+ */
 @Entity
 public class User implements Serializable {
     @Id
@@ -13,8 +16,8 @@ public class User implements Serializable {
     @Column(unique = true)
     private String name;
     @NotEmpty
-    @Column(length = 60)
-    private String password;
+    @Column(length = 60)        // длина строки, выдаваемая BCrypt
+    private String password;    // хеш пароля
     @ManyToOne
     private Role role;
 

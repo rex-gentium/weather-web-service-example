@@ -12,6 +12,11 @@ import java.time.LocalDate;
 import java.time.Month;
 import java.util.Random;
 
+/***
+ * Наполняет базу данных тестовыми записями при запуске приложения.
+ * Это черновой код, не стоит его оценивать, обычная БД должна наполняться
+ * скриптом либо руками
+ */
 @Component
 public class DataLoader implements ApplicationRunner {
 

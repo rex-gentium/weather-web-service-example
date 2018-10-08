@@ -4,6 +4,10 @@ import zamyslov.centreit.testtask.entity.WeatherEntry;
 
 import java.io.Serializable;
 
+/***
+ * Структура данных для упаковки в json, содержащая базовую информацию о погоде
+ * (является отображением WeatherEntry)
+ */
 public class WeatherCondition implements Serializable {
     private String name;
     private Long value;

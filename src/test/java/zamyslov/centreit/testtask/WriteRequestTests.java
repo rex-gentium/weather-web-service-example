@@ -89,7 +89,7 @@ public class WriteRequestTests {
             .andReturn().getResponse().getContentAsString();
         BasicResponse response = objectMapper.readValue(responseJson, BasicResponse.class);
         assertEquals(BasicResponse.ResultState.ERROR, response.getResultState());
-        assertNotNull(response.getResultMessage());
+        assertEquals("User baron doesn't have required permission", response.getResultMessage());
     }
 
     @Test
@@ -105,7 +105,7 @@ public class WriteRequestTests {
                 .andReturn().getResponse().getContentAsString();
         BasicResponse response = objectMapper.readValue(responseJson, BasicResponse.class);
         assertEquals(BasicResponse.ResultState.ERROR, response.getResultState());
-        assertNotNull(response.getResultMessage());
+        assertEquals("User with login someusername not found", response.getResultMessage());
     }
 
     @Test
@@ -122,7 +122,7 @@ public class WriteRequestTests {
                 .andReturn().getResponse().getContentAsString();
         BasicResponse response = objectMapper.readValue(responseJson, BasicResponse.class);
         assertEquals(BasicResponse.ResultState.ERROR, response.getResultState());
-        assertNotNull(response.getResultMessage());
+        assertEquals("Incorrect password for user herzog", response.getResultMessage());
     }
 
     @Test
@@ -140,7 +140,7 @@ public class WriteRequestTests {
                 .andReturn().getResponse().getContentAsString();
         BasicResponse response = objectMapper.readValue(responseJson, BasicResponse.class);
         assertEquals(BasicResponse.ResultState.ERROR, response.getResultState());
-        assertNotNull(response.getResultMessage());
+        assertEquals("City with id -1 not found", response.getResultMessage());
     }
 
     @Test
@@ -159,7 +159,7 @@ public class WriteRequestTests {
                 .andReturn().getResponse().getContentAsString();
         BasicResponse response = objectMapper.readValue(responseJson, BasicResponse.class);
         assertEquals(BasicResponse.ResultState.ERROR, response.getResultState());
-        assertNotNull(response.getResultMessage());
+        assertEquals("Weather indicator with id -1 not found", response.getResultMessage());
     }
 
     @Test
@@ -179,7 +179,8 @@ public class WriteRequestTests {
                 .andReturn().getResponse().getContentAsString();
         BasicResponse response = objectMapper.readValue(responseJson, BasicResponse.class);
         assertEquals(BasicResponse.ResultState.ERROR, response.getResultState());
-        assertNotNull(response.getResultMessage());
+        assertEquals("Value 146 is unacceptable for Относительная влажность воздуха indicator",
+                response.getResultMessage());
     }
 
     @Test

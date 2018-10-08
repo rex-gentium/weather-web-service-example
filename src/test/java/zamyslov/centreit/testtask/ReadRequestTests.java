@@ -113,7 +113,7 @@ public class ReadRequestTests {
                 .getResponse().getContentAsString();
         ResponseForWeatherEntryRead response = objectMapper.readValue(actualJson, ResponseForWeatherEntryRead.class);
         assertEquals(BasicResponse.ResultState.ERROR, response.getResultState());
-        assertNotNull(response.getResultMessage());
+        assertEquals("User with login graaf not found", response.getResultMessage());
         assertNull(response.getWeatherConditionList());
     }
 
@@ -132,7 +132,7 @@ public class ReadRequestTests {
                 .getResponse().getContentAsString();
         ResponseForWeatherEntryRead response = objectMapper.readValue(actualJson, ResponseForWeatherEntryRead.class);
         assertEquals(BasicResponse.ResultState.ERROR, response.getResultState());
-        assertNotNull(response.getResultMessage());
+        assertEquals("Incorrect password for user graf", response.getResultMessage());
         assertNull(response.getWeatherConditionList());
     }
 
@@ -152,7 +152,7 @@ public class ReadRequestTests {
                 .getResponse().getContentAsString();
         ResponseForWeatherEntryRead response = objectMapper.readValue(actualJson, ResponseForWeatherEntryRead.class);
         assertEquals(BasicResponse.ResultState.ERROR, response.getResultState());
-        assertNotNull(response.getResultMessage());
+        assertEquals("City with id -1 not found", response.getResultMessage());
         assertNull(response.getWeatherConditionList());
     }
 

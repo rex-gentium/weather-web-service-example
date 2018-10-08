@@ -7,6 +7,9 @@ import javax.persistence.Id;
 import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
 
+/***
+ * Описание сущности Роль
+ */
 @Entity
 public class Role implements Serializable {
     @Id

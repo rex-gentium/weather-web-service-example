@@ -1,14 +1,20 @@
 package zamyslov.centreit.testtask.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import zamyslov.centreit.testtask.entity.validation.WritePermissionConstraint;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDate;
 
+/***
+ * Описание сущности Запись о погоде
+ */
 @Entity
+// в данной предметной области (нелогично видеть два разных значения одного показателя на одну дату)
 @Table(uniqueConstraints=@UniqueConstraint(columnNames = {"city_id", "date", "indicator_id"}))
+@WritePermissionConstraint
 public class WeatherEntry implements Serializable {
     @Id
     @GeneratedValue

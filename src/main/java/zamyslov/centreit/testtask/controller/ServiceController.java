@@ -4,11 +4,12 @@ import org.springframework.web.bind.annotation.*;
 import zamyslov.centreit.testtask.exception.*;
 import zamyslov.centreit.testtask.json.*;
 import zamyslov.centreit.testtask.entity.*;
-import zamyslov.centreit.testtask.service.CityService;
-import zamyslov.centreit.testtask.service.IndicatorService;
-import zamyslov.centreit.testtask.service.UserService;
-import zamyslov.centreit.testtask.service.WeatherService;
+import zamyslov.centreit.testtask.service.*;
 
+/***
+ * Обрабатывает запросы о погоде
+ * (получение, запись)
+ */
 @RestController
 @RequestMapping("/weather-api")
 public class ServiceController {

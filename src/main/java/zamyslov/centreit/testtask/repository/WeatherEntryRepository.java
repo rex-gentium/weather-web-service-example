@@ -9,6 +9,9 @@ import zamyslov.centreit.testtask.entity.WeatherIndicator;
 import java.time.LocalDate;
 import java.util.Optional;
 
+/***
+ * DAO сущности Запись о погоде
+ */
 @Repository
 public interface WeatherEntryRepository extends CrudRepository<WeatherEntry, Long> {
     Iterable<WeatherEntry> findAllByCityAndDate(City city, LocalDate date);

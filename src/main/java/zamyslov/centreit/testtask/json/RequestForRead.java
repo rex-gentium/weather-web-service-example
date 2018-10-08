@@ -4,6 +4,9 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.time.LocalDate;
 
+/***
+ * Данные запроса на получение данных о погоде (описан в ТЗ)
+ */
 public class RequestForRead extends BasicRequest {
     private Long cityId;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")

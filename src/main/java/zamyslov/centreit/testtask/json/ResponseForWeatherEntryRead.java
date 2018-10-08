@@ -7,6 +7,10 @@ import java.time.LocalDate;
 import java.util.LinkedList;
 import java.util.List;
 
+/***
+ * Данные ответа на запрос получения данных о погоде в указанном
+ * городе на указанную дату (описан в ТЗ)
+ */
 public class ResponseForWeatherEntryRead extends BasicResponse {
     private String cityName;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
